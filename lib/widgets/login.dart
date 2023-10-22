@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:login_app/widgets/UserTheme.dart';
 import 'package:login_app/widgets/register.dart';
 import 'package:login_app/widgets/tasks.dart';
+import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
   const Login();
- @override
+  @override
   LoginPage createState() {
     return LoginPage();
   }
 }
+
 class LoginPage extends State<Login> {
   String username = '';
   String password = '';
   bool _isObscure = true;
   Future<String?> handlePressed() {
-
     return showDialog<String>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
@@ -31,6 +33,7 @@ class LoginPage extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    final userTheme = Provider.of<UserTheme>(context);
     return Scaffold(
       appBar: AppBar(title: const Text("Login page")),
       body: Center(
@@ -48,48 +51,59 @@ class LoginPage extends State<Login> {
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: 'Username',
-                        hintStyle: TextStyle(color: Colors.black), 
+                        hintStyle: TextStyle(color: Colors.black),
                       ),
                     ),
                     const SizedBox(height: 15),
                     TextField(
-                        obscureText: _isObscure,
-                        decoration: InputDecoration(
+                      obscureText: _isObscure,
+                      decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: 'Password',
                         hintStyle: TextStyle(color: Colors.black),
                         suffixIcon: IconButton(
-                        icon: Icon(_isObscure ? Icons.visibility : Icons.visibility_off),
-                        onPressed: () {
-                        setState(() {_isObscure = !_isObscure; });
-                            },
-                          ),
+                          icon: Icon(_isObscure
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                          onPressed: () {
+                            setState(() {
+                              _isObscure = !_isObscure;
+                            });
+                          },
                         ),
-                     ),
+                      ),
+                    ),
                     const SizedBox(height: 15),
                     TextButton(
-                        onPressed: () {
-                       Navigator.push(context,MaterialPageRoute(builder: (context) => Tasks()),);
-                       },
-                         style: TextButton.styleFrom(
-                         backgroundColor: Colors.black, 
-                         primary: Colors.white, 
-                        ),
+                      onPressed: () {
+                        userTheme.changeBackgroundColor(Colors.green);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Tasks()),
+                        );
+                      },
+                      style: TextButton.styleFrom(
+                        backgroundColor: Colors.black,
+                        primary: Colors.white,
+                      ),
                       child: const Text("Clique ici pour voir le TP3"),
                     ),
-                    const SizedBox(height:5),
+                    const SizedBox(height: 5),
                     GestureDetector(
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => Register()));
-                  },
-                  child: Text(
-                      "Si vous n'avez pas de compte créez un",
-                       style: TextStyle(
-                       color: Colors.red, 
-                       decoration: TextDecoration.underline,
-                       decorationColor: Colors.red,
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Register()));
+                      },
+                      child: Text(
+                        "Si vous n'avez pas de compte créez un",
+                        style: TextStyle(
+                          color: Colors.red,
+                          decoration: TextDecoration.underline,
+                          decorationColor: Colors.red,
+                        ),
                       ),
-                     ),
                     ),
                   ],
                 ),
@@ -101,4 +115,3 @@ class LoginPage extends State<Login> {
     );
   }
 }
-
