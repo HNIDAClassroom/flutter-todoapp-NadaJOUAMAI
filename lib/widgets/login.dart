@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:login_app/widgets/UserTheme.dart';
 import 'package:login_app/widgets/register.dart';
 import 'package:login_app/widgets/tasks.dart';
-import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
   const Login();
@@ -30,10 +28,8 @@ class LoginPage extends State<Login> {
               ],
             ));
   }
-
   @override
   Widget build(BuildContext context) {
-    final userTheme = Provider.of<UserTheme>(context);
     return Scaffold(
       appBar: AppBar(title: const Text("Login page")),
       body: Center(
@@ -76,7 +72,6 @@ class LoginPage extends State<Login> {
                     const SizedBox(height: 15),
                     TextButton(
                       onPressed: () {
-                        userTheme.changeBackgroundColor(Colors.green);
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => Tasks()),
