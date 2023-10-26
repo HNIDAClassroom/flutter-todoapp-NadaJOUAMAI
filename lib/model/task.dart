@@ -17,3 +17,4 @@ class Task {
     required this.category}) 
     : id = uuid.v4();
 }
+
