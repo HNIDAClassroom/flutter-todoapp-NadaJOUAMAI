@@ -69,10 +69,10 @@ class _TasksState extends State<Tasks> {
             icon: Ink(
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
-                color: Color.fromARGB(255, 143, 143, 193),
+                color: Color.fromARGB(255, 0, 0, 0),
               ),
               child: const Padding(
-                padding: EdgeInsets.all(10),
+                padding: EdgeInsets.all(5),
                 child: Icon(Icons.add),
               ),
             ),

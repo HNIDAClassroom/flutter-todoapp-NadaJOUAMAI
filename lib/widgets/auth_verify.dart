@@ -21,7 +21,7 @@ class AuthVerify extends StatelessWidget {
                 padding: const EdgeInsets.all(20),
                 child: AspectRatio(
                   aspectRatio: 1,
-                  child: Image.asset('assets/logo.png'),
+                  child: Image.asset('lib/images/logo.png'),
                 ),
               );
             },

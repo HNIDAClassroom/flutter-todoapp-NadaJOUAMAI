@@ -11,9 +11,9 @@ void main() async {
     MaterialApp(
       theme: ThemeData(
         appBarTheme: const AppBarTheme(elevation: 0),
-        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blueGrey)
+        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.purple)
             .copyWith(background: Colors.red.shade50),
-        scaffoldBackgroundColor: Color.fromARGB(255, 143, 143, 193),
+        scaffoldBackgroundColor: Color.fromARGB(255, 254, 239, 255),
       ),
       home: const AuthVerify(),
     ),
