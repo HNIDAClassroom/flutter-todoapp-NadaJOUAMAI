@@ -1,8 +1,12 @@
 import 'package:uuid/uuid.dart';
 
 const uuid = Uuid();
-
-enum Category { personal, work, shopping, others }
+enum Category {
+  personal,
+  work,
+  shopping,
+  others,
+}
 
 class Task {
   final String id;
@@ -10,11 +14,12 @@ class Task {
   final String description;
   final DateTime date;
   final Category category;
+  final bool completed; 
   Task({
     required this.title,
     required this.description,
     required this.date,
     required this.category}) 
-    : id = uuid.v4();
+    : id = uuid.v4(), completed = false;
 }
 
