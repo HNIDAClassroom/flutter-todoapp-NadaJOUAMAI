@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:login_app/model/task.dart';
+import 'package:intl/intl.dart';
 
 class NewTask extends StatefulWidget {
   const NewTask({super.key, required this.onAddTask});
@@ -11,9 +12,10 @@ class NewTask extends StatefulWidget {
 }
 
 class _NewTaskState extends State<NewTask> {
-  Category _selectedCategory = Category.personal;
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
+  DateTime? _selectedDate;
+  Category _selectedCategory = Category.personal;
   // ignore: unused_field
   var _enteredTitle = '';
 
@@ -24,6 +26,8 @@ class _NewTaskState extends State<NewTask> {
   @override
   void dispose() {
     _titleController.dispose();
+    _descriptionController.dispose();
+
     super.dispose();
   }
 
@@ -47,11 +51,28 @@ class _NewTaskState extends State<NewTask> {
       );
       return;
     }
+    print("Selected Category: $_selectedCategory");
+
     widget.onAddTask(Task(
         title: _titleController.text,
         description: _descriptionController.text,
-        date: DateTime(2023, 10, 16, 14, 30),
+        date: _selectedDate!, // Utilisez ! pour accéder à la valeur non nulle
         category: _selectedCategory));
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+
+    if (pickedDate != null && pickedDate != _selectedDate) {
+      setState(() {
+        _selectedDate = pickedDate;
+      });
+    }
   }
 
   @override
@@ -74,10 +95,34 @@ class _NewTaskState extends State<NewTask> {
               label: Text('Task description'),
             ),
           ),
+          const SizedBox(width: 16),
+          // Text field for entering the date
+          InkWell(
+            onTap: () => _selectDate(context),
+            child: InputDecorator(
+              decoration: InputDecoration(
+                labelText: 'Task date',
+                hintText: 'Sélectionnez une date',
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    _selectedDate != null
+                        ? DateFormat('yyyy-MM-dd').format(_selectedDate!)
+                        : 'Sélectionnez une date',
+                  ),
+                  Icon(Icons.calendar_today),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
           Row(
             children: [
               DropdownButton<Category>(
                 value: _selectedCategory,
+                style: TextStyle(color: Color.fromARGB(255, 12, 12, 12)),
                 items: Category.values
                     .map((category) => DropdownMenuItem<Category>(
                           value: category,
@@ -86,26 +131,17 @@ class _NewTaskState extends State<NewTask> {
                           ),
                         ))
                     .toList(),
-                //onChanged: (Category? newValue) {},
-                /*onChanged: (value) {
-                  
-                  setState(() {
-                    _selectedCategory = value!;
-                  });
-                },*/
                 onChanged: (value) {
                   if (value == null) {
                     return;
                   }
+
                   setState(() {
                     _selectedCategory = value;
                   });
                 },
               ),
-              /*DropdownButton(
-                items: items,
-                onChanged: onChanged,
-              ),*/
+              const SizedBox(width: 25),
               ElevatedButton(
                 onPressed: _submitTaskData,
                 style: ElevatedButton.styleFrom(
