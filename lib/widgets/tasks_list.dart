@@ -37,21 +37,22 @@ itemBuilder: (ctx, index) => TaskItem((tasks[index]),
                 data['taskDesc'] ?? ''; // Handle potential null value
             DateTime date;
             if (data['taskDate'] != null) {
-              date = DateTime.parse(data['taskDate']);
+              date = (data['taskDate'] as Timestamp).toDate();
             } else {
-              date = tasks[index].date;// Utilisez la date actuelle comme valeur par défaut
+              date = tasks[index]
+                  .date; // Utilisez la date actuelle comme valeur par défaut
             } // Handle potential null value
             String categoryString =
                 data['taskCategory'] ?? 'others'; // Handle potential null value
             Category category;
             switch (categoryString) {
-              case 'personal':
+              case 'Category.personal':
                 category = Category.personal;
                 break;
-              case 'work':
+              case 'Category.work':
                 category = Category.work;
                 break;
-              case 'shopping':
+              case 'Category.shopping':
                 category = Category.shopping;
                 break;
               default:
@@ -75,7 +76,8 @@ itemBuilder: (ctx, index) => TaskItem((tasks[index]),
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
-          return CircularProgressIndicator(); // Display a loading indicator while waiting for data.
+          return Center(
+              child: CircularProgressIndicator()); // Chargement en cours.
         }
       },
     );

@@ -80,7 +80,7 @@ class _TasksState extends State<Tasks> {
             icon: Ink(
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
-                color: Color.fromARGB(255, 0, 0, 0),
+                color: Color.fromARGB(255, 255, 255, 255),
               ),
               child: const Padding(
                 padding: EdgeInsets.all(5),

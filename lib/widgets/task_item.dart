@@ -88,7 +88,7 @@ class _TaskItemState extends State<TaskItem> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Date: ${DateFormat('yyyy-MM-dd').format(widget.task.date)}',
+                        'Date: ${DateFormat('yyyy-MM-dd').format(widget.task.date.toLocal())}',
                         textAlign: TextAlign.left,
                       ),
                       SizedBox(height: 5),

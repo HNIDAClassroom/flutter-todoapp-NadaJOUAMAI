@@ -9,6 +9,7 @@ class FirestoreService {
       {
         'taskTitle': task.title.toString(),
         'taskDesc': task.description.toString(),
+        'taskDate' : Timestamp.fromDate(task.date),
         'taskCategory': task.category.toString(),
       },
     );

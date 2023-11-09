@@ -14,7 +14,7 @@ class NewTask extends StatefulWidget {
 class _NewTaskState extends State<NewTask> {
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
-  DateTime? _selectedDate;
+  DateTime _selectedDate = DateTime.now();
   Category _selectedCategory = Category.personal;
   // ignore: unused_field
   var _enteredTitle = '';
@@ -60,13 +60,13 @@ class _NewTaskState extends State<NewTask> {
         category: _selectedCategory));
   }
 
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? pickedDate = await showDatePicker(
+    void _selectDate() async {
+    DateTime pickedDate = (await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: _selectedDate,
       firstDate: DateTime(2000),
       lastDate: DateTime(2101),
-    );
+    )) ?? DateTime.now();
 
     if (pickedDate != null && pickedDate != _selectedDate) {
       setState(() {
@@ -83,41 +83,28 @@ class _NewTaskState extends State<NewTask> {
         children: [
           TextField(
             controller: _titleController,
-            maxLength: 50,
+            maxLength: 200,
             decoration: const InputDecoration(
               label: Text('Task title'),
             ),
           ),
           TextField(
             controller: _descriptionController,
-            maxLength: 50,
+            maxLength: 200,
             decoration: const InputDecoration(
               label: Text('Task description'),
             ),
           ),
           const SizedBox(width: 16),
-          // Text field for entering the date
-          InkWell(
-            onTap: () => _selectDate(context),
-            child: InputDecorator(
-              decoration: InputDecoration(
-                labelText: 'Task date',
-                hintText: 'Sélectionnez une date',
+          Row(
+            children: [
+              Text("Date: ${DateFormat('dd-MM-yyyy').format(_selectedDate)}"), // Affiche la date sélectionnée
+              TextButton(
+                onPressed: _selectDate,
+                child: Text('Select Date'),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    _selectedDate != null
-                        ? DateFormat('yyyy-MM-dd').format(_selectedDate!)
-                        : 'Sélectionnez une date',
-                  ),
-                  Icon(Icons.calendar_today),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(height: 20),
+            ],
+          ),          const SizedBox(height: 20),
           Row(
             children: [
               DropdownButton<Category>(
@@ -135,7 +122,6 @@ class _NewTaskState extends State<NewTask> {
                   if (value == null) {
                     return;
                   }
-
                   setState(() {
                     _selectedCategory = value;
                   });

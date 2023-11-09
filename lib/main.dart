@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:login_app/widgets/auth_verify.dart';
 import 'firebase_options.dart'; 
@@ -7,11 +8,13 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  // Déconnexion de l'utilisateur actuel
+  await FirebaseAuth.instance.signOut();
   runApp(
     MaterialApp(
       theme: ThemeData(
         appBarTheme: const AppBarTheme(elevation: 0),
-        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.purple)
+        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.yellow)
             .copyWith(background: Colors.red.shade50),
         scaffoldBackgroundColor: Color.fromARGB(255, 254, 239, 255),
       ),
